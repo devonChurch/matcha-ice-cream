@@ -1,0 +1,31 @@
+{
+  "name": "matcha-ice-cream",
+  "version": "1.0.0",
+  "description": "An AWS Translate POC",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devonChurch/matcha-ice-cream.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devonChurch/matcha-ice-cream/issues"
+  },
+  "homepage": "https://github.com/devonChurch/matcha-ice-cream#readme",
+  "dependencies": {
+    "material-ui": "^0.20.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.234.1"
+  }
+}
