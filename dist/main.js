@@ -41450,6 +41450,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var material_ui_svg_icons_social_sentiment_satisfied__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(material_ui_svg_icons_social_sentiment_satisfied__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! material-ui/styles/colors */ "./node_modules/material-ui/styles/colors.js");
 /* harmony import */ var material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _content__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./content */ "./src/content.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -41467,13 +41468,17 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 
 
+
+console.log("*** content", _content__WEBPACK_IMPORTED_MODULE_12__["default"]);
+
 const testIsInvalid = value => !Boolean(value);
+const convertCountryToValue = country => country.toLowerCase().replace(/ /g, "");
 const initialState = {
   first: "",
   last: "",
   email: "",
   phone: "",
-  country: "america",
+  country: convertCountryToValue(_content__WEBPACK_IMPORTED_MODULE_12__["default"].form.country.options[0]),
   terms: false,
   hasAttempted: false,
   isComplete: false
@@ -41517,6 +41522,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         hasAttempted,
         isComplete
       } = this.state;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         material_ui_styles_MuiThemeProvider__WEBPACK_IMPORTED_MODULE_1___default.a,
         null,
@@ -41550,12 +41556,12 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "h1",
                 null,
-                "30-day free trial"
+                _content__WEBPACK_IMPORTED_MODULE_12__["default"].introduction.heading
               ),
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                 "p",
                 null,
-                "Try every feature, add unlimited users, no credit card required"
+                _content__WEBPACK_IMPORTED_MODULE_12__["default"].introduction.description
               )
             ),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -41573,11 +41579,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                   "div",
                   { style: { margin: "10px 0" } },
                   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_TextField__WEBPACK_IMPORTED_MODULE_3___default.a, {
-                    floatingLabelText: "First Name",
+                    floatingLabelText: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.first.label,
                     type: "text",
                     fullWidth: true,
                     value: first,
-                    errorText: hasAttempted && testIsInvalid(first) && "First name can't be empty",
+                    errorText: hasAttempted && testIsInvalid(first) && _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.first.error,
                     onChange: e => this.handleUpdate("first", e.target.value)
                   })
                 ),
@@ -41585,11 +41591,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                   "div",
                   { style: { margin: "10px 0" } },
                   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_TextField__WEBPACK_IMPORTED_MODULE_3___default.a, {
-                    floatingLabelText: "Last Name",
+                    floatingLabelText: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.last.label,
                     type: "text",
                     fullWidth: true,
                     value: last,
-                    errorText: hasAttempted && testIsInvalid(last) && "Last name can't be empty",
+                    errorText: hasAttempted && testIsInvalid(last) && _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.last.error,
                     onChange: e => this.handleUpdate("last", e.target.value)
                   })
                 ),
@@ -41597,11 +41603,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                   "div",
                   { style: { margin: "10px 0" } },
                   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_TextField__WEBPACK_IMPORTED_MODULE_3___default.a, {
-                    floatingLabelText: "Email Address",
+                    floatingLabelText: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.email.label,
                     type: "email",
                     fullWidth: true,
                     value: email,
-                    errorText: hasAttempted && testIsInvalid(email) && "Email address can't be empty",
+                    errorText: hasAttempted && testIsInvalid(email) && _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.email.error,
                     onChange: e => this.handleUpdate("email", e.target.value)
                   })
                 ),
@@ -41609,11 +41615,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                   "div",
                   { style: { margin: "10px 0" } },
                   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_TextField__WEBPACK_IMPORTED_MODULE_3___default.a, {
-                    floatingLabelText: "Phone Number",
+                    floatingLabelText: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.phone.label,
                     type: "tel",
                     fullWidth: true,
                     value: phone,
-                    errorText: hasAttempted && testIsInvalid(phone) && "Phone number can't be empty",
+                    errorText: hasAttempted && testIsInvalid(phone) && _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.phone.error,
                     onChange: e => this.handleUpdate("phone", e.target.value)
                   })
                 ),
@@ -41623,15 +41629,15 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
                     material_ui_SelectField__WEBPACK_IMPORTED_MODULE_4___default.a,
                     {
-                      floatingLabelText: "Country",
+                      floatingLabelText: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.country.label,
                       fullWidth: true,
-                      errorText: hasAttempted && testIsInvalid(country) && "Country can't be empty",
+                      errorText: hasAttempted && testIsInvalid(country) && _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.country.error,
                       value: country,
                       onChange: (e, value, payload) => this.handleUpdate("country", payload)
                     },
-                    ["America", "New Zealand", "Germany", "France", "Spain"].sort().map((item, index) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_MenuItem__WEBPACK_IMPORTED_MODULE_5___default.a, {
+                    _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.country.options.sort().map((item, index) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_MenuItem__WEBPACK_IMPORTED_MODULE_5___default.a, {
                       key: index,
-                      value: item.toLowerCase().replace(/ /g, ""),
+                      value: convertCountryToValue(item),
                       primaryText: item
                     }))
                   )
@@ -41640,7 +41646,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                   "div",
                   { style: { margin: "30px 0 40px" } },
                   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_Checkbox__WEBPACK_IMPORTED_MODULE_6___default.a, {
-                    label: "I have read and I agree to the terms of use, privacy policy and offer details",
+                    label: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.terms.label,
                     labelStyle: {
                       color: hasAttempted && testIsInvalid(terms) ? material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11__["red500"] : "inherit"
                     },
@@ -41650,7 +41656,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                 ),
                 react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_RaisedButton__WEBPACK_IMPORTED_MODULE_7___default.a, {
                   type: "submit",
-                  label: "Get Started",
+                  label: _content__WEBPACK_IMPORTED_MODULE_12__["default"].form.submit.label,
                   primary: true,
                   disabled: isComplete,
                   onClick: this.handleSubmit
@@ -41661,9 +41667,9 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
             material_ui_Dialog__WEBPACK_IMPORTED_MODULE_9___default.a,
             {
-              title: "Check your inbox",
+              title: _content__WEBPACK_IMPORTED_MODULE_12__["default"].success.heading,
               actions: [react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_FlatButton__WEBPACK_IMPORTED_MODULE_8___default.a, {
-                label: "Awesome",
+                label: _content__WEBPACK_IMPORTED_MODULE_12__["default"].success.label,
                 labelPosition: "before",
                 primary: true,
                 icon: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_svg_icons_social_sentiment_satisfied__WEBPACK_IMPORTED_MODULE_10___default.a, null),
@@ -41672,7 +41678,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
               modal: true,
               open: isComplete
             },
-            "Confirm your email address to continue."
+            _content__WEBPACK_IMPORTED_MODULE_12__["default"].success.description
           )
         )
       );
@@ -41682,6 +41688,24 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./src/content.js":
+/*!************************!*\
+  !*** ./src/content.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const rehydrateNode = document.getElementById("rehydrate");
+const content = JSON.parse(rehydrateNode.innerHTML);
+
+console.log("content", content);
+
+/* harmony default export */ __webpack_exports__["default"] = (content);
 
 /***/ }),
 
@@ -41703,13 +41727,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const rehydrateNode = document.getElementById("rehydrate");
-const rehydrateJson = JSON.parse(rehydrateNode.innerHTML);
-
-console.log("rehydrateJson", rehydrateJson);
-
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], { content: rehydrateJson }), document.getElementById("root"));
-registerServiceWorker();
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById("root"));
 
 /***/ })
 

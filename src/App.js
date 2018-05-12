@@ -10,14 +10,19 @@ import FlatButton from "material-ui/FlatButton";
 import Dialog from "material-ui/Dialog";
 import FaceIcon from "material-ui/svg-icons/social/sentiment-satisfied";
 import * as colors from "material-ui/styles/colors";
+import content from "./content";
+
+console.log("*** content", content);
 
 const testIsInvalid = value => !Boolean(value);
+const convertCountryToValue = country =>
+  country.toLowerCase().replace(/ /g, "");
 const initialState = {
   first: "",
   last: "",
   email: "",
   phone: "",
-  country: "america",
+  country: convertCountryToValue(content.form.country.options[0]),
   terms: false,
   hasAttempted: false,
   isComplete: false
@@ -67,6 +72,7 @@ class App extends Component {
       hasAttempted,
       isComplete
     } = this.state;
+
     return (
       <MuiThemeProvider>
         <div
@@ -90,10 +96,8 @@ class App extends Component {
                 marginBottom: "50px"
               }}
             >
-              <h1>30-day free trial</h1>
-              <p>
-                Try every feature, add unlimited users, no credit card required
-              </p>
+              <h1>{content.introduction.heading}</h1>
+              <p>{content.introduction.description}</p>
             </div>
             <Paper
               style={{
@@ -104,14 +108,14 @@ class App extends Component {
               <form onSubmit={this.handleSubmit}>
                 <div style={{ margin: "10px 0" }}>
                   <TextField
-                    floatingLabelText="First Name"
+                    floatingLabelText={content.form.first.label}
                     type="text"
                     fullWidth
                     value={first}
                     errorText={
                       hasAttempted &&
                       testIsInvalid(first) &&
-                      "First name can't be empty"
+                      content.form.first.error
                     }
                     onChange={e => this.handleUpdate("first", e.target.value)}
                   />
@@ -119,14 +123,14 @@ class App extends Component {
 
                 <div style={{ margin: "10px 0" }}>
                   <TextField
-                    floatingLabelText="Last Name"
+                    floatingLabelText={content.form.last.label}
                     type="text"
                     fullWidth
                     value={last}
                     errorText={
                       hasAttempted &&
                       testIsInvalid(last) &&
-                      "Last name can't be empty"
+                      content.form.last.error
                     }
                     onChange={e => this.handleUpdate("last", e.target.value)}
                   />
@@ -134,14 +138,14 @@ class App extends Component {
 
                 <div style={{ margin: "10px 0" }}>
                   <TextField
-                    floatingLabelText="Email Address"
+                    floatingLabelText={content.form.email.label}
                     type="email"
                     fullWidth
                     value={email}
                     errorText={
                       hasAttempted &&
                       testIsInvalid(email) &&
-                      "Email address can't be empty"
+                      content.form.email.error
                     }
                     onChange={e => this.handleUpdate("email", e.target.value)}
                   />
@@ -149,14 +153,14 @@ class App extends Component {
 
                 <div style={{ margin: "10px 0" }}>
                   <TextField
-                    floatingLabelText="Phone Number"
+                    floatingLabelText={content.form.phone.label}
                     type="tel"
                     fullWidth
                     value={phone}
                     errorText={
                       hasAttempted &&
                       testIsInvalid(phone) &&
-                      "Phone number can't be empty"
+                      content.form.phone.error
                     }
                     onChange={e => this.handleUpdate("phone", e.target.value)}
                   />
@@ -164,24 +168,24 @@ class App extends Component {
 
                 <div style={{ margin: "10px 0" }}>
                   <SelectField
-                    floatingLabelText="Country"
+                    floatingLabelText={content.form.country.label}
                     fullWidth
                     errorText={
                       hasAttempted &&
                       testIsInvalid(country) &&
-                      "Country can't be empty"
+                      content.form.country.error
                     }
                     value={country}
                     onChange={(e, value, payload) =>
                       this.handleUpdate("country", payload)
                     }
                   >
-                    {["America", "New Zealand", "Germany", "France", "Spain"]
+                    {content.form.country.options
                       .sort()
                       .map((item, index) => (
                         <MenuItem
                           key={index}
-                          value={item.toLowerCase().replace(/ /g, "")}
+                          value={convertCountryToValue(item)}
                           primaryText={item}
                         />
                       ))}
@@ -190,7 +194,7 @@ class App extends Component {
 
                 <div style={{ margin: "30px 0 40px" }}>
                   <Checkbox
-                    label="I have read and I agree to the terms of use, privacy policy and offer details"
+                    label={content.form.terms.label}
                     labelStyle={{
                       color:
                         hasAttempted && testIsInvalid(terms)
@@ -204,7 +208,7 @@ class App extends Component {
 
                 <RaisedButton
                   type="submit"
-                  label="Get Started"
+                  label={content.form.submit.label}
                   primary={true}
                   disabled={isComplete}
                   onClick={this.handleSubmit}
@@ -214,10 +218,10 @@ class App extends Component {
           </div>
           {/* - - - - - - - - - - - - - - - */}
           <Dialog
-            title="Check your inbox"
+            title={content.success.heading}
             actions={[
               <FlatButton
-                label="Awesome"
+                label={content.success.label}
                 labelPosition="before"
                 primary={true}
                 icon={<FaceIcon />}
@@ -227,7 +231,7 @@ class App extends Component {
             modal={true}
             open={isComplete}
           >
-            Confirm your email address to continue.
+            {content.success.description}
           </Dialog>
         </div>
       </MuiThemeProvider>
