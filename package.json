@@ -4,6 +4,7 @@
   "description": "An AWS Translate POC",
   "main": "index.js",
   "scripts": {
+    "start": "npm run build:development && open ./dist/index.html",
     "build:development": "NODE_ENV=development webpack",
     "build:production": "NODE_ENV=production webpack -p",
     "deploy": "node ./build/deploy.js"

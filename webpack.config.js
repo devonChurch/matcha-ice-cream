@@ -44,13 +44,13 @@ module.exports = {
         // { code: "fr", label: "French" }
       ];
       const productionLangs = [
-        ...developmentLangs
-        // { code: 'ar', label: 'Arabic' },
-        // { code: 'zh', label: 'Chinese' },
-        // { code: "fr", label: "French" }
-        // { code: 'de', label: 'German' },
-        // { code: 'pt', label: 'Portuguese' },
-        // { code: 'es', label: 'Spanish' },
+        ...developmentLangs,
+        { code: "ar", label: "Arabic" },
+        { code: "zh", label: "Chinese" },
+        { code: "fr", label: "French" },
+        { code: "de", label: "German" },
+        { code: "pt", label: "Portuguese" },
+        { code: "es", label: "Spanish" }
       ];
       const langs = isProduction ? productionLangs : developmentLangs;
       translate(langs);
