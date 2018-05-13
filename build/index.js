@@ -9,6 +9,7 @@ const isProduction = NODE_ENV === PRODUCTION_ENV;
 const mkdir = promisify(fs.mkdir);
 const dirDist = path.resolve(__dirname, "../", "dist");
 const dirJs = isProduction ? "" : dirDist;
+const basePath = isProduction ? "" : "matcha-ice-cream/dist";
 const AWS = require("aws-sdk");
 
 AWS.config.region = "us-east-1";
@@ -16,9 +17,9 @@ AWS.config.region = "us-east-1";
 const LANG_DEFAULT = "en";
 const translate = new AWS.Translate({ apiVersion: "2017-07-01" });
 
-const createHtml = (lang = LANG_DEFAULT, json = "") =>
+const createHtml = (code = LANG_DEFAULT, json = "") =>
   "<!DOCTYPE html>" +
-  `<html lang="${lang}">
+  `<html lang="${code}">
 
 <head>
   <meta charset="utf-8">
@@ -47,18 +48,18 @@ const defaultTranslate = text => {
   return Promise.resolve(text);
 };
 
-const awsTranslate = (lang, text) => {
-  consola.log(`translate "${text}" to (${lang})`);
+const awsTranslate = (code, text) => {
+  consola.log(`translate "${text}" to (${code})`);
   const params = {
     SourceLanguageCode: LANG_DEFAULT,
-    TargetLanguageCode: lang,
+    TargetLanguageCode: code,
     Text: text
   };
 
   return new Promise((resolve, reject) => {
     translate.translateText(params, (error, response) => {
       // {
-      //   "TranslatedText": "- Bonjour",
+      //   "TranslatedText": "Bonjour",
       //   "SourceLanguageCode": "en",
       //   "TargetLanguageCode": "fr"
       // }
@@ -71,16 +72,37 @@ const awsTranslate = (lang, text) => {
 const createTranslator = (lang = LANG_DEFAULT) => text =>
   lang === LANG_DEFAULT ? defaultTranslate(text) : awsTranslate(lang, text);
 
-const init = async langs => {
-  consola.start(`starting translation sequence for (${langs.join(", ")})`);
+const createlanguageOptions = async (langs, translator) => {
+  const options = [];
+
   for (const lang of langs) {
-    consola.start(`translating language (${lang})`);
+    const { code, label } = lang;
+    options.push({ code, label: await translator(label) });
+  }
+
+  return options;
+};
+
+const init = async langs => {
+  const langList = langs
+    .map(({ code, label }) => `"${label}" (${code})`)
+    .join(", ");
+  consola.start(`starting translation sequence for ${langList}`);
+  for (const lang of langs) {
+    const { code, label } = lang;
+    consola.start(`translating language "${label}" (${code})`);
 
     try {
-      const translator = createTranslator(lang);
+      const translator = createTranslator(code);
 
       const transcript = {
-        langs,
+        basePath,
+        language: {
+          default: LANG_DEFAULT,
+          label: await translator("Language"),
+          current: code,
+          options: await createlanguageOptions(langs, translator)
+        },
         introduction: {
           heading: await translator("30-day free trial"),
           description: await translator(
@@ -134,12 +156,12 @@ const init = async langs => {
       };
 
       const json = JSON.stringify(transcript);
-      const html = createHtml(lang, json);
+      const html = createHtml(code, json);
 
-      await mkdir(`${dirDist}/${lang}`);
-      await writeFile(`${dirDist}/${lang}/index.html`, html);
-      if (lang === LANG_DEFAULT) await writeFile(`${dirDist}/index.html`, html);
-      consola.success(`translated language (${lang})`);
+      await mkdir(`${dirDist}/${code}`);
+      await writeFile(`${dirDist}/${code}/index.html`, html);
+      if (code === LANG_DEFAULT) await writeFile(`${dirDist}/index.html`, html);
+      consola.success(`translated language "${label}" (${code})`);
     } catch (error) {
       consola.error(error);
     }

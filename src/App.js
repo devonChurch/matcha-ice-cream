@@ -11,6 +11,7 @@ import Dialog from "material-ui/Dialog";
 import FaceIcon from "material-ui/svg-icons/social/sentiment-satisfied";
 import * as colors from "material-ui/styles/colors";
 import content from "./content";
+import Language from "./language";
 
 const testIsInvalid = value => !Boolean(value);
 const convertCountryToValue = country =>
@@ -96,6 +97,10 @@ class App extends Component {
             >
               <h1>{content.introduction.heading}</h1>
               <p>{content.introduction.description}</p>
+
+              <div style={{ margin: "10px 0" }}>
+                <Language />
+              </div>
             </div>
             <Paper
               style={{

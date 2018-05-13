@@ -41451,9 +41451,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! material-ui/styles/colors */ "./node_modules/material-ui/styles/colors.js");
 /* harmony import */ var material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _content__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./content */ "./src/content.js");
+/* harmony import */ var _language__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./language */ "./src/language.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 
 
 
@@ -41560,6 +41562,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                 "p",
                 null,
                 _content__WEBPACK_IMPORTED_MODULE_12__["default"].introduction.description
+              ),
+              react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+                "div",
+                { style: { margin: "10px 0" } },
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_language__WEBPACK_IMPORTED_MODULE_13__["default"], null)
               )
             ),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -41724,6 +41731,70 @@ __webpack_require__.r(__webpack_exports__);
 
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById("root"));
+
+/***/ }),
+
+/***/ "./src/language.js":
+/*!*************************!*\
+  !*** ./src/language.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var material_ui_SelectField__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! material-ui/SelectField */ "./node_modules/material-ui/SelectField/index.js");
+/* harmony import */ var material_ui_SelectField__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(material_ui_SelectField__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var material_ui_MenuItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! material-ui/MenuItem */ "./node_modules/material-ui/MenuItem/index.js");
+/* harmony import */ var material_ui_MenuItem__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(material_ui_MenuItem__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! material-ui/styles/colors */ "./node_modules/material-ui/styles/colors.js");
+/* harmony import */ var material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _content__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./content */ "./src/content.js");
+
+
+
+
+
+
+class Language extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+  constructor(...args) {
+    var _temp;
+
+    return _temp = super(...args), this.handleChange = newCode => {
+      const { basePath } = _content__WEBPACK_IMPORTED_MODULE_4__["default"];
+      const { href } = window.location;
+      const hasLanguage = /\/\w{2}\//g.test(href);
+      const currentHref = href;
+      const currentCode = _content__WEBPACK_IMPORTED_MODULE_4__["default"].language.current;
+      const newHref = (hasLanguage ? currentHref : // The build sequence creates a default language ("en") that does NOT have
+      // a language stipulation in the URL. In that regard its a little harder to
+      // update the language code in the URL as it does not exist. If this is the
+      // case we append a hook onto the base path to make its format consistent
+      // before running through the "update" / "delete" sequence.
+      currentHref.replace(basePath, `${basePath}/${currentCode}`)).replace(`/${currentCode}/`, `/${newCode}/`);
+
+      window.location.assign(newHref);
+    }, this.render = () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      material_ui_SelectField__WEBPACK_IMPORTED_MODULE_1___default.a,
+      {
+        floatingLabelText: _content__WEBPACK_IMPORTED_MODULE_4__["default"].language.label,
+        floatingLabelStyle: { color: material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_3__["blue200"] },
+        labelStyle: { color: material_ui_styles_colors__WEBPACK_IMPORTED_MODULE_3__["white"] },
+        value: _content__WEBPACK_IMPORTED_MODULE_4__["default"].language.current,
+        onChange: (e, value, payload) => {
+          console.log(e, value, payload);
+          this.handleChange(payload);
+        }
+      },
+      _content__WEBPACK_IMPORTED_MODULE_4__["default"].language.options.map(({ code, label }, index) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_ui_MenuItem__WEBPACK_IMPORTED_MODULE_2___default.a, { key: index, value: code, primaryText: label }))
+    ), _temp;
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Language);
 
 /***/ })
 
