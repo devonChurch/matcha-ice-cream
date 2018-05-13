@@ -8,8 +8,8 @@ const { NODE_ENV = PRODUCTION_ENV } = process.env;
 const isProduction = NODE_ENV === PRODUCTION_ENV;
 const mkdir = promisify(fs.mkdir);
 const dirDist = path.resolve(__dirname, "../", "dist");
-const dirJs = isProduction ? "" : dirDist;
-const basePath = isProduction ? "" : "matcha-ice-cream/dist";
+const dirJs = isProduction ? "/matcha-ice-cream" : dirDist;
+const basePath = isProduction ? "/matcha-ice-cream" : "matcha-ice-cream/dist";
 const AWS = require("aws-sdk");
 
 AWS.config.region = "us-east-1";
