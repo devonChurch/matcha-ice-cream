@@ -1,6 +1,7 @@
 const path = require("path");
 const WebpackOnBuildPlugin = require("on-build-webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const consola = require("consola").withScope("webpack");
 const translate = require("./build");
 const PRODUCTION_ENV = "production";
 const { NODE_ENV = PRODUCTION_ENV } = process.env;
@@ -8,7 +9,7 @@ const isProduction = NODE_ENV === PRODUCTION_ENV;
 const dirDist = path.resolve(__dirname, "dist");
 const dirSrc = path.resolve(__dirname, "src");
 
-console.log(`node environment = "${NODE_ENV}"`);
+consola.ready(`build configured for (${NODE_ENV})`);
 
 module.exports = {
   mode: NODE_ENV,
@@ -37,12 +38,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(dirDist),
 
-    new WebpackOnBuildPlugin(function(stats) {
-      console.log("*** DONE ***");
-      console.log("\n\n");
-      // console.log(JSON.stringify(stats, null, 2));
-      console.log(stats);
-      console.log("\n\n");
+    new WebpackOnBuildPlugin(() => {
       const langs = isProduction ? ["en"] : ["en"];
       translate(langs);
     })

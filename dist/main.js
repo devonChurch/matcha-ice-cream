@@ -41469,8 +41469,6 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 
 
-console.log("*** content", _content__WEBPACK_IMPORTED_MODULE_12__["default"]);
-
 const testIsInvalid = value => !Boolean(value);
 const convertCountryToValue = country => country.toLowerCase().replace(/ /g, "");
 const initialState = {
@@ -41702,8 +41700,6 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 __webpack_require__.r(__webpack_exports__);
 const rehydrateNode = document.getElementById("rehydrate");
 const content = JSON.parse(rehydrateNode.innerHTML);
-
-console.log("content", content);
 
 /* harmony default export */ __webpack_exports__["default"] = (content);
 

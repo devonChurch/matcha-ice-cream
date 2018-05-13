@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { promisify } = require("util");
+const consola = require("consola").withScope("translate");
 const writeFile = promisify(fs.writeFile);
 const PRODUCTION_ENV = "production";
 const { NODE_ENV = PRODUCTION_ENV } = process.env;
@@ -41,9 +42,13 @@ const createHtml = (lang = LANG_DEFAULT, json = "") =>
 
 </html>`;
 
-const defaultTranslate = text => Promise.resolve(text);
+const defaultTranslate = text => {
+  consola.log(`add default (${LANG_DEFAULT}) "${text}"`);
+  return Promise.resolve(text);
+};
 
 const awsTranslate = (lang, text) => {
+  consola.log(`translate "${text}" to (${lang})`);
   const params = {
     SourceLanguageCode: LANG_DEFAULT,
     TargetLanguageCode: lang,
@@ -67,70 +72,78 @@ const createTranslator = (lang = LANG_DEFAULT) => text =>
   lang === LANG_DEFAULT ? defaultTranslate(text) : awsTranslate(lang, text);
 
 const init = async langs => {
-  console.log("\n\n\n\n");
+  consola.start(`starting translation sequence for (${langs.join(", ")})`);
   for (const lang of langs) {
-    const translator = createTranslator(lang);
+    consola.start(`translating language (${lang})`);
 
-    const transcript = {
-      langs,
-      introduction: {
-        heading: await translator("30-day free trial"),
-        description: await translator(
-          "Try every feature, add unlimited users, no credit card required"
-        )
-      },
-      form: {
-        first: {
-          label: await translator("First Name"),
-          error: await translator("First name is required")
-        },
-        last: {
-          label: await translator("Last Name"),
-          error: await translator("Last name is required")
-        },
-        email: {
-          label: await translator("Email Address"),
-          error: await translator("Email address is required")
-        },
-        phone: {
-          label: await translator("Phone Number"),
-          error: await translator("Phone number is required")
-        },
-        country: {
-          label: await translator("Country"),
-          options: [
-            await translator("America"),
-            await translator("New Zealand"),
-            await translator("Germany"),
-            await translator("France"),
-            await translator("Spain")
-          ],
-          error: await translator("Country is required")
-        },
-        terms: {
-          label: await translator(
-            "I have read and I agree to the terms of use, privacy policy and offer details"
+    try {
+      const translator = createTranslator(lang);
+
+      const transcript = {
+        langs,
+        introduction: {
+          heading: await translator("30-day free trial"),
+          description: await translator(
+            "Try every feature, add unlimited users, no credit card required"
           )
         },
-        submit: {
-          label: await translator("Get Started")
+        form: {
+          first: {
+            label: await translator("First Name"),
+            error: await translator("First name is required")
+          },
+          last: {
+            label: await translator("Last Name"),
+            error: await translator("Last name is required")
+          },
+          email: {
+            label: await translator("Email Address"),
+            error: await translator("Email address is required")
+          },
+          phone: {
+            label: await translator("Phone Number"),
+            error: await translator("Phone number is required")
+          },
+          country: {
+            label: await translator("Country"),
+            options: [
+              await translator("America"),
+              await translator("New Zealand"),
+              await translator("Germany"),
+              await translator("France"),
+              await translator("Spain")
+            ],
+            error: await translator("Country is required")
+          },
+          terms: {
+            label: await translator(
+              "I have read and I agree to the terms of use, privacy policy and offer details"
+            )
+          },
+          submit: {
+            label: await translator("Get Started")
+          }
+        },
+        success: {
+          heading: await translator("Check your inbox"),
+          description: await translator(
+            "Confirm your email address to continue"
+          ),
+          label: await translator("Awesome")
         }
-      },
-      success: {
-        heading: await translator("Check your inbox"),
-        description: await translator("Confirm your email address to continue"),
-        label: await translator("Awesome")
-      }
-    };
+      };
 
-    console.log("\n", { transcript });
-    const json = JSON.stringify(transcript);
-    console.log("\n", json);
-    const html = createHtml(lang, json);
-    console.log("\n", { html });
-    await mkdir(`${dirDist}/${lang}`);
-    await writeFile(`${dirDist}/${lang}/index.html`, html);
-    if (lang === LANG_DEFAULT) await writeFile(`${dirDist}/index.html`, html);
+      const json = JSON.stringify(transcript);
+      const html = createHtml(lang, json);
+
+      await mkdir(`${dirDist}/${lang}`);
+      await writeFile(`${dirDist}/${lang}/index.html`, html);
+      if (lang === LANG_DEFAULT) await writeFile(`${dirDist}/index.html`, html);
+      consola.success(`translated language (${lang})`);
+    } catch (error) {
+      consola.error(error);
+    }
+    consola.ready(`completed all translation sequences`);
   }
 };
 

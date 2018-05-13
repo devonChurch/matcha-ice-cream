@@ -12,8 +12,6 @@ import FaceIcon from "material-ui/svg-icons/social/sentiment-satisfied";
 import * as colors from "material-ui/styles/colors";
 import content from "./content";
 
-console.log("*** content", content);
-
 const testIsInvalid = value => !Boolean(value);
 const convertCountryToValue = country =>
   country.toLowerCase().replace(/ /g, "");
