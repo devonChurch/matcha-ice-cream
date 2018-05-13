@@ -8,6 +8,8 @@ Translation is executed via [AWS Translate](https://aws.amazon.com/translate/) a
 
 [Click here](https://devonchurch.github.io/matcha-ice-cream/)
 
+![translate-examples](https://user-images.githubusercontent.com/15273233/39965452-eaae2ee2-56ec-11e8-8ba4-e9ecfe1a86c1.png)
+
 ## Installation
 
 * Clone this repository
