@@ -36,9 +36,9 @@ Translation is executed via [AWS Translate](https://aws.amazon.com/translate/) a
 
   ```javascript
   // ...
-  const translator = createTranslator('en');
+  const translator = createTranslator('fr');
   const transcript = {
-    message: await translator('Hello World!')
+    message: await translator('Hello World!') // Outputs "Bonjour le monde!"
   };
   // ...
   ```
@@ -50,8 +50,12 @@ Translation is executed via [AWS Translate](https://aws.amazon.com/translate/) a
   ```
 
   The translator function will create each language string variant and a corresponding `.html` scaffold as part of the applications URL structure.
+  
+  ![translation-sequence](https://user-images.githubusercontent.com/15273233/39984811-86b6deb0-57b0-11e8-93af-6aca16bf82da.gif)
 
 - Rehydrate your _React_ application on the _client_ from the translation object embedded into the `DOM`
+
+  ![screen shot 2018-05-14 at 7 35 08 pm](https://user-images.githubusercontent.com/15273233/39984862-a5b8e79a-57b0-11e8-9cc8-fb36810dbf76.png)
 
 ## Deployment
 
