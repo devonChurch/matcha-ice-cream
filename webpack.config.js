@@ -23,6 +23,8 @@ module.exports = {
 
   devtool: isProduction ? "source-map" : "cheap-source-map",
 
+  stats: isProduction ? "normal" : "errors-only",
+
   module: {
     rules: [
       {
