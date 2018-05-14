@@ -72,14 +72,17 @@ const awsTranslate = (code, text) => {
 const createTranslator = (lang = LANG_DEFAULT) => text =>
   lang === LANG_DEFAULT ? defaultTranslate(text) : awsTranslate(lang, text);
 
-const createlanguageOptions = async (langs, translator) => {
-  const options = [];
+const createlanguageOptions = async langs => {
+  consola.info("create language option list");
+  let options = [];
 
   for (const lang of langs) {
     const { code, label } = lang;
-    options.push({ code, label: await translator(label) });
+    const translator = createTranslator(code);
+    options = [...options, { code, label: await translator(label) }];
   }
 
+  consola.ready("created language option list");
   return options;
 };
 
@@ -88,6 +91,7 @@ const init = async langs => {
     .map(({ code, label }) => `"${label}" (${code})`)
     .join(", ");
   consola.start(`starting translation sequence for ${langList}`);
+  const languageOptions = await createlanguageOptions(langs);
   for (const lang of langs) {
     const { code, label } = lang;
     consola.start(`translating language "${label}" (${code})`);
@@ -101,7 +105,7 @@ const init = async langs => {
           default: LANG_DEFAULT,
           label: await translator("Language"),
           current: code,
-          options: await createlanguageOptions(langs, translator)
+          options: languageOptions
         },
         introduction: {
           heading: await translator("30-day free trial"),
@@ -165,7 +169,7 @@ const init = async langs => {
     } catch (error) {
       consola.error(error);
     }
-    consola.ready(`completed all translation sequences`);
+    consola.ready("completed all translation sequences");
   }
 };
 

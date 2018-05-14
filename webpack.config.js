@@ -40,8 +40,13 @@ module.exports = {
 
     new WebpackOnBuildPlugin(() => {
       const developmentLangs = [
-        { code: "en", label: "English" }
-        // { code: "fr", label: "French" }
+        { code: "en", label: "English" },
+        { code: "ar", label: "Arabic" }
+        // { code: "zh", label: "Chinese" },
+        // { code: "fr", label: "French" },
+        // { code: "de", label: "German" },
+        // { code: "pt", label: "Portuguese" },
+        // { code: "es", label: "Spanish" }
       ];
       const productionLangs = [
         ...developmentLangs,
